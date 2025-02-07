@@ -9,7 +9,7 @@ strategy:
       java.version: '17'
 
 steps:
-  - task: UseJavaVersion@0
+  - task: UseJavaVersion@1
     inputs:
       versionSpec: '$(java.version)'
     displayName: 'Use Java $(java.version)'
