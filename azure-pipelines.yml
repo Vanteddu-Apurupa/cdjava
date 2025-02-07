@@ -1,0 +1,36 @@
+trigger:
+  -master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+strategy:
+  matrix:
+    java17:
+      java.version: '17'
+
+steps:
+  - task: UseJavaVersion@0
+    inputs:
+      versionSpec: '$(java.version)'
+    displayname: 'Use Java $(java.version)'
+  - script: 
+      echo 'public class Sum { > Sum.java
+      echo '   public static void main(String[] args){' >> Sum.java
+      echo '        int a=10, b=20;' >> Sum.java
+      echo '        int sum=a+b;' >> Sum.java
+      echo '        System.out.println("Sum:" +sum);'>> Sum.java
+      echo '  }' >> Sum.java
+      echo '}' >> Sum.java
+      javac Sum.java
+      java Sum
+    displayName: 'Run Java Program'
+  - task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '$(java.version)'
+      jdkArchitecture: 'x64'
+  
+  - script:
+      echo 'This is Section 1 Azure Demo'
+      echo 'KL-CSE'
+    displayName: 'Print Messages'
